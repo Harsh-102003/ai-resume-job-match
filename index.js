@@ -39,6 +39,13 @@ app.post("/api/match", (req, res) => {
   res.json(result);
 });
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({
+    message: "Internal server error",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
