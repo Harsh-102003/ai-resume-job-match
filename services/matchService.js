@@ -8,18 +8,21 @@ function calculateMatch(resumeSkills, requiredSkills) {
   const normalizedResumeSkills = resumeSkills.map((skill) =>
     skill.trim().toLowerCase(),
   );
+  const uniqueResumeSkills = [...new Set(normalizedResumeSkills)];
   const normalizedRequiredSkills = requiredSkills.map((skill) =>
     skill.trim().toLowerCase(),
   );
-  const matchedSkills = normalizedRequiredSkills.filter((skill) =>
-    normalizedResumeSkills.includes(skill),
+  const uniqueRequiredSkills = [...new Set(normalizedRequiredSkills)];
+  const matchedSkills = uniqueRequiredSkills.filter((skill) =>
+    uniqueResumeSkills.includes(skill),
   );
 
-  const missingSkills = normalizedRequiredSkills.filter(
-    (skill) => !normalizedResumeSkills.includes(skill),
+  const missingSkills = uniqueRequiredSkills.filter(
+    (skill) => !uniqueResumeSkills.includes(skill),
   );
 
-  const matchPercentage = (matchedSkills.length / normalizedRequiredSkills.length) * 100;
+  const matchPercentage =
+    (matchedSkills.length / uniqueRequiredSkills.length) * 100;
 
   return {
     matchedSkills,

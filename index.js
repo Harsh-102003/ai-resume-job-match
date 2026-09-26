@@ -1,5 +1,5 @@
-const { calculateMatch } = require("./services/matchService");
 const express = require("express");
+const router = require("./routes/matchRoutes");
 
 const app = express();
 
@@ -12,6 +12,8 @@ app.use(express.json());
 
 const PORT = 5000;
 
+app.use("/api", router);
+
 app.get("/", (req, res) => {
   res.json({
     message: "AI Resume Job Match API is running",
@@ -23,20 +25,6 @@ app.get("/api/health", (req, res) => {
     status: "ok",
     service: "AI Resume Job Match API",
   });
-});
-
-app.post("/api/match", (req, res) => {
-  if (
-    !Array.isArray(req.body.resumeSkills) ||
-    !Array.isArray(req.body.requiredSkills)
-  ) {
-    return res.status(400).json({
-      message: "resumeSkills and requiredSkills must be arrays",
-    });
-  }
-  const result = calculateMatch(req.body.resumeSkills, req.body.requiredSkills);
-
-  res.json(result);
 });
 
 app.use((err, req, res, next) => {
