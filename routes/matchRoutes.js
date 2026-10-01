@@ -11,10 +11,12 @@ router.post(
   (req, res, next) => {
     if (
       !Array.isArray(req.body.resumeSkills) ||
-      !Array.isArray(req.body.requiredSkills)
+      !Array.isArray(req.body.requiredSkills) ||
+      !req.body.resumeSkills.every((skill) => typeof skill === "string") ||
+      !req.body.requiredSkills.every((skill) => typeof skill === "string")
     ) {
       return res.status(400).json({
-        message: "resumeSkills and requiredSkills must be arrays",
+        message: "resumeSkills and requiredSkills must be arrays of strings",
       });
     }
     next();
