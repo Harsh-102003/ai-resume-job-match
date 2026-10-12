@@ -22,7 +22,8 @@ function calculateMatch(resumeSkills, requiredSkills) {
   );
 
   const matchPercentage =
-    (matchedSkills.length / uniqueRequiredSkills.length) * 100;
+    Math.round((matchedSkills.length / uniqueRequiredSkills.length) * 10000) /
+    100;
 
   return {
     matchedSkills,

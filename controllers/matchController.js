@@ -6,7 +6,7 @@ function matchController(req, res, next) {
       req.body.resumeSkills,
       req.body.requiredSkills,
     );
-    res.json(result);
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
     next(err);
