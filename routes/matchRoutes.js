@@ -12,11 +12,11 @@ router.post(
     if (
       !Array.isArray(req.body.resumeSkills) ||
       !Array.isArray(req.body.requiredSkills) ||
-      !req.body.resumeSkills.every((skill) => typeof skill === "string") ||
-      !req.body.requiredSkills.every((skill) => typeof skill === "string")
+      !req.body.resumeSkills.every((skill) => typeof skill === "string" && skill.trim().length > 0) ||
+      !req.body.requiredSkills.every((skill) => typeof skill === "string" && skill.trim().length > 0)
     ) {
       return res.status(400).json({
-        message: "resumeSkills and requiredSkills must be arrays of strings",
+        message: "resumeSkills and requiredSkills must be arrays of non-empty strings"
       });
     }
     next();
