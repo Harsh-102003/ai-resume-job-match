@@ -1,27 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const { validateSkills } = require("../middleware/validateSkills");
 const { matchController } = require("../controllers/matchController");
 
 router.get("/home", (req, res) => {
   res.json({ message: "Match endpoint" });
 });
 
-router.post(
-  "/match",
-  (req, res, next) => {
-    if (
-      !Array.isArray(req.body.resumeSkills) ||
-      !Array.isArray(req.body.requiredSkills) ||
-      !req.body.resumeSkills.every((skill) => typeof skill === "string" && skill.trim().length > 0) ||
-      !req.body.requiredSkills.every((skill) => typeof skill === "string" && skill.trim().length > 0)
-    ) {
-      return res.status(400).json({
-        message: "resumeSkills and requiredSkills must be arrays of non-empty strings"
-      });
-    }
-    next();
-  },
-  matchController,
-);
+router.post("/match", validateSkills, matchController);
 
 module.exports = router;
